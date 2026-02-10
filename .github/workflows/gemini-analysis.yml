@@ -1,3 +1,4 @@
+# Sample GitHub Actions workflow for Gemini API integration
 name: Gemini Analysis
 
 on:
@@ -9,11 +10,18 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Analyze with Gemini API
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
         run: |
-          curl -X POST https://api.gemini.com/v1/analyze \ 
-              -H 'Content-Type: application/json' \ 
-              -d '{"repo":"${{ github.repository }}"}'
+          npm install
+
+      - name: Run Gemini API integration script
+        run: |
+          node scripts/geminiIntegration.js
